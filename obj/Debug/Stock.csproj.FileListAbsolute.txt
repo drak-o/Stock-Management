@@ -28,8 +28,9 @@ C:\Users\snapi\Desktop\Stock\obj\Debug\Stock.Stock.resources
 C:\Users\snapi\Desktop\Stock\obj\Debug\Stock.Properties.Resources.resources
 C:\Users\snapi\Desktop\Stock\obj\Debug\Stock.csproj.GenerateResource.cache
 C:\Users\snapi\Desktop\Stock\obj\Debug\Stock.csproj.CoreCompileInputs.cache
-C:\Users\snapi\Desktop\Stock\obj\Debug\Stock.exe
-C:\Users\snapi\Desktop\Stock\obj\Debug\Stock.pdb
+C:\Users\snapi\Desktop\Stock\bin\Debug\App.config
 C:\Users\snapi\Desktop\Stock\bin\Debug\Stock.exe.config
 C:\Users\snapi\Desktop\Stock\bin\Debug\Stock.exe
 C:\Users\snapi\Desktop\Stock\bin\Debug\Stock.pdb
+C:\Users\snapi\Desktop\Stock\obj\Debug\Stock.exe
+C:\Users\snapi\Desktop\Stock\obj\Debug\Stock.pdb

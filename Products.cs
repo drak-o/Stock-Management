@@ -21,7 +21,7 @@ namespace Stock
         public void LoadData()
         {
             // Create connection to DB and send query through sql adapter
-            SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=Stock;Integrated Security=True");
+            SqlConnection con = Connection.GetConnection();
             SqlDataAdapter sda = new SqlDataAdapter(@"SELECT * FROM [Stock].[dbo].Products", con);
             
             // Create a DataTable in RAM which we fill with our DB
@@ -63,6 +63,15 @@ namespace Stock
         
         }
 
+        private void ResetRecords()
+        {
+            txtProductCode.Clear();
+            txtProductName.Clear();
+            cmbStatus.SelectedIndex = -1;
+            btnAdd.Text = "Add";
+            txtProductCode.Focus();
+        }
+
         public Products()
         {
             InitializeComponent();
@@ -76,8 +85,8 @@ namespace Stock
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=Stock;Integrated Security=True");
-            
+            SqlConnection con = Connection.GetConnection();
+
             con.Open();
             // Decide status based on front-end status
             bool status = cmbStatus.SelectedIndex == 0;
@@ -112,6 +121,7 @@ namespace Stock
             cmd.ExecuteNonQuery();
             con.Close();
             LoadData();
+            btnAdd.Text = "Add";
         }
 
         private void dgvProducts_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -132,7 +142,7 @@ namespace Stock
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=Stock;Integrated Security=True");
+            SqlConnection con = Connection.GetConnection();
             var sqlQuery = "";
             
             // if product exists delete it
@@ -151,6 +161,11 @@ namespace Stock
                 MessageBox.Show("No record found with that product code");
             }
             LoadData();
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            ResetRecords();
         }
     }
 }
