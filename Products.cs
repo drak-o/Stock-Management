@@ -16,6 +16,9 @@ namespace Stock
 {
     public partial class Products : Form
     {   
+        /* 
+         * Utils funcions 
+         */
 
         //Function that Loads DB to front-end
         public void LoadData()
@@ -63,6 +66,7 @@ namespace Stock
         
         }
 
+        // Function that resets records
         private void ResetRecords()
         {
             txtProductCode.Clear();
@@ -72,10 +76,44 @@ namespace Stock
             txtProductCode.Focus();
         }
 
+        private bool Validation()
+        {
+            bool result = false;
+
+            if (string.IsNullOrEmpty(txtProductCode.Text)) 
+            {
+                errorProvider1.Clear();
+                errorProvider1.SetError(txtProductCode, "Product code requiered");
+            }
+            else if (string.IsNullOrEmpty(txtProductName.Text))
+            {
+                errorProvider1.Clear();
+                errorProvider1.SetError(txtProductName, "Product name requiered");
+            }
+            else if (cmbStatus.SelectedIndex == -1)
+            {
+                errorProvider1.Clear();
+                errorProvider1.SetError(cmbStatus, "Select Status");
+            }
+            else
+            {
+                result = true;
+            }
+
+
+
+            return result;
+        }
+
+        /*main*/
         public Products()
         {
             InitializeComponent();
         }
+
+        /*
+         * Event listeners
+         */
 
         private void Products_Load(object sender, EventArgs e)
         {
@@ -83,45 +121,49 @@ namespace Stock
             LoadData();
         }
 
+
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            SqlConnection con = Connection.GetConnection();
-
-            con.Open();
-            // Decide status based on front-end status
-            bool status = cmbStatus.SelectedIndex == 0;
-
-            if (cmbStatus.SelectedIndex == 1) 
-            { 
-                status = true;
-            }
-            else
+            if (Validation())
             {
-                status = false;
+                SqlConnection con = Connection.GetConnection();
+
+                con.Open();
+                // Decide status based on front-end status
+                bool status = cmbStatus.SelectedIndex == 0;
+
+                if (cmbStatus.SelectedIndex == 1)
+                {
+                    status = true;
+                }
+                else
+                {
+                    status = false;
+                }
+
+                var sqlQuery = ""; //bad practice can inject SQL (overwrite)
+
+                // Logic for updating in case the product code already exists 
+                if (IfProductExists(con, txtProductCode.Text))
+                {
+                    sqlQuery = @"UPDATE [Products] SET [ProductName] = '" + txtProductName.Text + "' ,[ProductStatus] = '" + status + "'" +
+                               "WHERE [ProductCode] = '" + txtProductCode.Text + "'";
+
+                }
+
+                // Logic for inserting
+                else
+                {
+                    sqlQuery = @"INSERT INTO [Stock].[dbo].[Products] ([ProductCode] ,[ProductName] ,[ProductStatus]) VALUES
+                            ('" + txtProductCode.Text + "', '" + txtProductName.Text + "','" + status + "')";
+                }
+
+                SqlCommand cmd = new SqlCommand(sqlQuery, con); //send query
+                cmd.ExecuteNonQuery();
+                con.Close();
+                LoadData();
+                btnAdd.Text = "Add"; 
             }
-
-            var sqlQuery = ""; //bad practice can inject SQL (overwrite)
-
-            // Logic for updating in case the product code already exists 
-            if (IfProductExists(con,txtProductCode.Text))
-            {
-               sqlQuery = @"UPDATE [Products] SET [ProductName] = '" + txtProductName.Text + "' ,[ProductStatus] = '" + status + "'" +
-                          "WHERE [ProductCode] = '" + txtProductCode.Text + "'";
-
-            }
-
-            // Logic for inserting
-            else
-            {
-                sqlQuery = @"INSERT INTO [Stock].[dbo].[Products] ([ProductCode] ,[ProductName] ,[ProductStatus]) VALUES
-                            ('" + txtProductCode.Text + "', '" +txtProductName.Text + "','" + status + "')";
-            }
-
-            SqlCommand cmd = new SqlCommand(sqlQuery, con); //send query
-            cmd.ExecuteNonQuery();
-            con.Close();
-            LoadData();
-            btnAdd.Text = "Add";
         }
 
         private void dgvProducts_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -142,25 +184,33 @@ namespace Stock
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            SqlConnection con = Connection.GetConnection();
-            var sqlQuery = "";
-            
-            // if product exists delete it
-            if (IfProductExists(con,txtProductCode.Text))
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this record?",
+                                        "Message", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
             {
-                con.Open();
-                sqlQuery = @"DELETE FROM [Products] WHERE [ProductCode] = '" + txtProductCode.Text + "'";
-                SqlCommand cmd = new SqlCommand(sqlQuery, con);
-                cmd.ExecuteNonQuery();
-                con.Close();
-            }
+                if (Validation())
+                {
+                    SqlConnection con = Connection.GetConnection();
+                    var sqlQuery = "";
 
-            //else can't find it
-            else
-            {
-                MessageBox.Show("No record found with that product code");
+                    // if product exists delete it
+                    if (IfProductExists(con, txtProductCode.Text))
+                    {
+                        con.Open();
+                        sqlQuery = @"DELETE FROM [Products] WHERE [ProductCode] = '" + txtProductCode.Text + "'";
+                        SqlCommand cmd = new SqlCommand(sqlQuery, con);
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+
+                    //else can't find it
+                    else
+                    {
+                        MessageBox.Show("No record found with that product code");
+                    }
+                    LoadData();
+                } 
             }
-            LoadData();
         }
 
         private void btnReset_Click(object sender, EventArgs e)

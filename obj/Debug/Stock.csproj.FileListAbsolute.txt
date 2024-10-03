@@ -34,3 +34,17 @@ C:\Users\snapi\Desktop\Stock\bin\Debug\Stock.exe
 C:\Users\snapi\Desktop\Stock\bin\Debug\Stock.pdb
 C:\Users\snapi\Desktop\Stock\obj\Debug\Stock.exe
 C:\Users\snapi\Desktop\Stock\obj\Debug\Stock.pdb
+C:\Users\22034195\Desktop\Stock-Management-main\obj\Debug\Stock.csproj.AssemblyReference.cache
+C:\Users\22034195\Desktop\Stock-Management-main\obj\Debug\Stock.Login.resources
+C:\Users\22034195\Desktop\Stock-Management-main\obj\Debug\Stock.Products.resources
+C:\Users\22034195\Desktop\Stock-Management-main\obj\Debug\Stock.Properties.Resources.resources
+C:\Users\22034195\Desktop\Stock-Management-main\obj\Debug\Stock.csproj.GenerateResource.cache
+C:\Users\22034195\Desktop\Stock-Management-main\obj\Debug\Stock.csproj.CoreCompileInputs.cache
+C:\Users\22034195\Desktop\Stock-Management-main\obj\Debug\Stock.exe
+C:\Users\22034195\Desktop\Stock-Management-main\obj\Debug\Stock.pdb
+C:\Users\22034195\Desktop\Stock-Management-main\bin\Debug\App.config
+C:\Users\22034195\Desktop\Stock-Management-main\bin\Debug\Stock.exe.config
+C:\Users\22034195\Desktop\Stock-Management-main\bin\Debug\Stock.exe
+C:\Users\22034195\Desktop\Stock-Management-main\bin\Debug\Stock.pdb
+C:\Users\22034195\Desktop\Stock-Management-main\obj\Debug\Stock.StockMain.resources
+C:\Users\22034195\Desktop\Stock-Management-main\obj\Debug\Stock.Stock.resources

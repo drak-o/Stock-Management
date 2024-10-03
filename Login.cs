@@ -36,7 +36,7 @@ namespace Stock
             if (dt.Rows.Count == 1)
             {
                 this.Hide();
-                Stock main = new Stock(); //RENAME
+                StockMain main = new StockMain(); //RENAME
                 main.Show();
 
             }

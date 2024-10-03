@@ -12,23 +12,38 @@ namespace Stock
 {
     public partial class Stock : Form
     {
-
         public Stock()
         {
             InitializeComponent();
         }
 
-        private void Stock_FormClosing(object sender, FormClosingEventArgs e)
+        private void Stock_Load(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.ActiveControl = dateTimePicker1;
+            cmbStatus.SelectedIndex = 0;
         }
 
-        private void productsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Stock_KeyDown(object sender, KeyEventArgs e)
         {
-            Products pro = new Products();
-            pro.MdiParent = this;
-            pro.StartPosition = FormStartPosition.CenterScreen;
-            pro.Show();
+            if (e.KeyCode == Keys.Enter) 
+            { 
+                txtProductCode.Focus();
+            }
+        }
+
+        private void txtProductCode_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (txtProductCode.Text.Length > 0)
+                {
+                    txtProductCode.Focus();
+                }
+                else
+                {
+                    txtProductCode.Focus();
+                }
+            }
         }
     }
 }
